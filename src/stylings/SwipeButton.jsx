@@ -27,6 +27,7 @@ export default function SwipeButton({ onSuccess , content}) {
     if (offset >= max * 0.9) {
       setOffset(max);
       onSuccess?.();
+      setOffset(0);
     } else {
       setOffset(0);
     }
@@ -49,7 +50,20 @@ export default function SwipeButton({ onSuccess , content}) {
         onMouseDown={(e) => startDrag(e.clientX)}
         onTouchStart={(e) => startDrag(e.touches[0].clientX)}
       >
-        →
+        <svg
+          className="w-6 h-6 text-gray-800 dark:text-[#000090]"
+          aria-hidden="true"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9"
+          />
+        </svg>
       </div>
       <span className="absolute inset-0 flex items-center justify-center text-white text-sm pointer-events-none pl-7">
         {content}

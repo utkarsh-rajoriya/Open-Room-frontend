@@ -8,6 +8,10 @@ body{
   background-color: black;
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 @layer utilities{
   .flex-row{
     @apply flex justify-center items-center;
