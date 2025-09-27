@@ -90,7 +90,7 @@ const Hero = () => {
             <div className="spotcard" key={card.roomName}>
             <SpotlightCard
               className="custom-spotlight-card flex-col h-[20rem]"
-              spotlightColor="rgba(0, 229, 255, 0.2)"
+              spotlightColor="rgba(0, 225, 180, 0.3)"
             >
               <div className="flex-row justify-between gap-[1rem] lg:gap-[1.5rem]">
               <img src={card.roomImg} alt="" className="h-20 lg:h-[7rem]" />
