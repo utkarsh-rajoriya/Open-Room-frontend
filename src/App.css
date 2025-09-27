@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+*{
+  color : "white";
+}
+
+body{
+  background-color: black;
+}
+
+@layer utilities{
+  .flex-row{
+    @apply flex justify-center items-center;
+  }
+
+  .flex-col{
+    @apply flex flex-col justify-center items-center;
+  }
+}
+
+@layer components{
+  .spotcard{
+    @apply w-[28rem] md:w-[20rem] lg:w-[25rem]
+  }
+}
