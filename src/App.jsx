@@ -5,6 +5,7 @@ import PillNav from "./components/PillNav";
 import RippleCursor from "./stylings/RippleCursor";
 import CreateRoom from "./components/CreateRoom";
 import JoinRoom from "./components/JoinRoom";
+import Room from "./components/Room";
 
 const App = () => {
   const logo =
@@ -34,8 +35,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Hero />} />
-        <Route path="/createRoom" element={<CreateRoom />} />
-        <Route path="/joinRoom" element={<JoinRoom />} />
+        <Route path="/room" element={<Room />} />
       </Routes>
     </div>
   );
