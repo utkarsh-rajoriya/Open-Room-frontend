@@ -3,13 +3,10 @@ import "./App.css";
 import Hero from "./components/Hero";
 import PillNav from "./components/PillNav";
 import RippleCursor from "./stylings/RippleCursor";
-import CreateRoom from "./components/CreateRoom";
-import JoinRoom from "./components/JoinRoom";
 import Room from "./components/Room";
+import logo from '/Open-Room-logo.png'
 
 const App = () => {
-  const logo =
-    "https://png.pngtree.com/png-clipart/20240717/original/pngtree-creative-logo-design-illustration-png-image_15579132.png";
   return (
     <div>
       <div className="flex-row">
