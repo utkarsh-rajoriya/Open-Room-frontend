@@ -22,47 +22,48 @@ const Room = () => {
           className="relative custom-spotlight-card h-full opacity-80 bg-transparent"
           spotlightColor="rgba(0, 225, 180, 0.3)"
         >
-          <div className="flex justify-between items-center md:px-4 py-2 ">
-            <div className="border-1 border-white rounded-full flex-row p-2">
-              <svg
-                class="w-6 h-6 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 5H1m0 0 4 4M1 5l4-4"
-                />
-              </svg>
-            </div>
+         <div className="flex justify-between items-center md:px-4 py-2 ">
+  <div className="border border-white rounded-full flex-row p-2">
+    <svg
+      className="w-6 h-6 text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 14 10"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M13 5H1m0 0 4 4M1 5l4-4"
+      />
+    </svg>
+  </div>
 
-            <h1 className="text-3xl text-white font-black text-center">
-              Room name
-            </h1>
+  <h1 className="text-3xl text-white font-black text-center">
+    Room name
+  </h1>
 
-            <div className="border-1 border-white rounded-full flex-row p-2">
-              <svg
-                class="w-6 h-6 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 16"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-                />
-              </svg>
-            </div>
-          </div>
+  <div className="border border-white rounded-full flex-row p-2">
+    <svg
+      className="w-6 h-6 text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 18 16"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+      />
+    </svg>
+  </div>
+</div>
+
 
           {/* Chat Body */}
           <div className="flex-1 overflow-x-hidden overflow-y-auto md:px-5 py-4 space-y-2 max-h-[80%]">
