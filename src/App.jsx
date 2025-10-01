@@ -26,6 +26,7 @@ const App = () => {
 
       const data = await response.json();
       setUser(data);
+      localStorage.setItem('email',data.email);
     } catch (error) {
       console.error("Fetch failed:", error);
     }
@@ -41,6 +42,7 @@ const App = () => {
       if (!response.ok) throw new Error(`Logout failed: ${response.status}`);
       console.log(await response.text());
       setUser(null);
+      localStorage.removeItem('email');
     } catch (error) {
       console.error(error);
     }
