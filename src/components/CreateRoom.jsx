@@ -91,7 +91,7 @@ const CreateRoom = ({ onClose }) => {
         </div>
 
         {/* Swipe Button */}
-        <div className="mt-4">
+        <div className="mt-4 flex-row">
           <SwipeButton onSuccess={handleCreateRoom} content="Create Room" />
         </div>
       </SpotlightCard>

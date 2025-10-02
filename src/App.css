@@ -16,10 +16,6 @@ body {
   .flex-row {
     @apply flex justify-center items-center;
   }
-
-  .flex-col {
-    @apply flex flex-col justify-center items-center;
-  }
 }
 
 @layer components {

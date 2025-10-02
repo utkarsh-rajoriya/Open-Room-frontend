@@ -39,7 +39,7 @@ const JoinRoom = ({ onClose }) => {
         </div>
 
         {/* Swipe Button */}
-        <div className="mt-2  ">
+        <div className="mt-2 flex-row">
           <SwipeButton onSuccess={handleJoinRoom} content="Join Room" />
         </div>
       </SpotlightCard>
