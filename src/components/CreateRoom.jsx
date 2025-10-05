@@ -1,16 +1,56 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SpotlightCard from "../stylings/SpotlightCard";
 import SwipeButton from "../stylings/SwipeButton";
+import { useNavigate } from "react-router-dom";
 
 const CreateRoom = ({ onClose }) => {
   const [roomName, setRoomName] = useState("");
   const [limit, setLimit] = useState(5);
   const [isPrivate, setIsPrivate] = useState(false);
   const [enableAI, setEnableAI] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCreateRoom = () => {
-    console.log("create room swiped", { roomName, limit, isPrivate, enableAI });
-  };
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8081";
+
+  const handleCreateRoom = async () => {
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/createRoom?email=${localStorage.getItem('email')}`, 
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", 
+        body: JSON.stringify({
+          name: roomName,         
+          memberLimit: limit,     
+          privacy: isPrivate,     
+          ai: enableAI,           
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to create room");
+    }
+
+    const data = await response.json();
+
+    if (data.message === "success") {
+      navigate("/viewRooms");
+      window.location.reload()
+      onClose?.();
+    } else {
+      alert(`❌ ${data.message}`);
+    }
+
+  } catch (error) {
+    console.error("❌ Error creating room:", error);
+    alert("❌ Something went wrong while creating the room");
+  }
+};
+
 
   return (
     <div className="relative w-[20rem] text-white">
@@ -51,7 +91,7 @@ const CreateRoom = ({ onClose }) => {
             value={limit}
             min={1}
             max={100}
-            onChange={(e) => setLimit(e.target.value)}
+            onChange={(e) => setLimit(Number(e.target.value))}
             className="px-3 py-2 rounded-2xl border border-white/40 bg-transparent focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
         </div>

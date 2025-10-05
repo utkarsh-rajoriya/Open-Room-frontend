@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Aurora from "../stylings/Aurora";
 import RotatingText from "../stylings/RotatingText";
 import SpotlightCard from "../stylings/SpotlightCard";
 import SwipeButton from "../stylings/SwipeButton";
 import CreateRoom from "./CreateRoom";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import JoinRoom from "./JoinRoom";
+import {useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({user}) => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-
+  gsap.registerPlugin(ScrollToPlugin)
+  const navigate = useNavigate();
+  const buttonsRef = useRef(null)
   const RoomCardArray = [
     {
       roomImg:
@@ -49,8 +54,68 @@ const Hero = () => {
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [showJoinRoom, setShowJoinRoom] = useState(false);
 
-  const handleCreateRoom = () => setShowCreateRoom(true);
-  const handleJoinRoom = () => setShowJoinRoom(true);
+  const tl = gsap.timeline();
+
+  const showLogins = () => {
+  tl.clear(); // clear previous timeline animations
+
+  // Scroll smoothly to the login buttons
+  tl.to(window, {
+    duration: 1,
+    scrollTo: { y: buttonsRef.current, offsetY: 200 },
+    ease: "power2.inOut",
+  });
+
+  // GitHub button animation
+  tl.to(".github", {
+    scale: 1.4,
+    rotation: 5,
+    duration: 0.4,
+    yoyo: true,
+    repeat: 1,
+    ease: "bounce.out",
+    boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
+  }, "-=0.2"); // start slightly overlapping previous animation
+
+  // Google button animation
+  tl.to(".google", {
+    scale: 1.3,
+    rotation: -5,
+    duration: 0.4,
+    yoyo: true,
+    repeat: 1,
+    ease: "elastic.out(1, 0.5)",
+    boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
+  }, "-=0.35"); // overlap a bit more for a fun staggered effect
+
+  // Optional: add a small shake effect to both buttons at the end
+  tl.to([".github", ".google"], {
+    x: 5,
+    duration: 0.05,
+    yoyo: true,
+    repeat: 5,
+    ease: "power1.inOut",
+  });
+};
+
+
+  const handleCreateRoom = () =>{
+    if(!localStorage.getItem('email')){
+      showLogins()
+      return;
+    }
+
+  setShowCreateRoom(true);
+  }
+
+  const handleJoinRoom = () =>{
+    if(!localStorage.getItem('email')){
+      showLogins()
+      return;
+    }
+    navigate("/viewRooms")
+  }
+  
   const closeModal = () => {
     setShowCreateRoom(false);
     setShowJoinRoom(false);
@@ -99,7 +164,7 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="buttons">
+        {!user && <div className="buttons" ref={buttonsRef}>
           <div className="w-55">
             <button
               onClick={(e) =>
@@ -163,7 +228,7 @@ const Hero = () => {
               </div>
             </button>
           </div>
-        </div>
+        </div>}
 
         {/* Room Cards */}
         <div className="flex-row mt-[3rem] md:mt-[4rem]">
@@ -174,7 +239,7 @@ const Hero = () => {
                   className="custom-spotlight-card flex-col h-[20rem] overflow-visible relative"
                   spotlightColor="rgba(0, 225, 180, 0.3)"
                 >
-                  <div className="flex-row justify-between gap-[1rem] lg:gap-[1.5rem]">
+                  <div className="flex-row justify-between gap-[1.5rem]">
                     <img
                       src={card.roomImg}
                       alt=""
@@ -208,11 +273,11 @@ const Hero = () => {
         {(showCreateRoom || showJoinRoom) && (
           <div
             className="fixed inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-            onClick={closeModal} // closes when clicking outside modal
+            onClick={closeModal}
           >
             <div
               className="relative z-30 w-full max-w-md px-4 flex-row"
-              onClick={(e) => e.stopPropagation()} // prevents overlay click from closing modal
+              onClick={(e) => e.stopPropagation()}
             >
               {showCreateRoom && <CreateRoom onClose={closeModal} />}
               {showJoinRoom && <JoinRoom onClose={closeModal} />}
