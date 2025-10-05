@@ -75,9 +75,8 @@ const Hero = ({user}) => {
     repeat: 1,
     ease: "bounce.out",
     boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
-  }, "-=0.2"); // start slightly overlapping previous animation
-
-  // Google button animation
+  }, "-=0.2");
+  
   tl.to(".google", {
     scale: 1.3,
     rotation: -5,
@@ -86,9 +85,8 @@ const Hero = ({user}) => {
     repeat: 1,
     ease: "elastic.out(1, 0.5)",
     boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
-  }, "-=0.35"); // overlap a bit more for a fun staggered effect
-
-  // Optional: add a small shake effect to both buttons at the end
+  }, "-=0.35");
+  
   tl.to([".github", ".google"], {
     x: 5,
     duration: 0.05,
