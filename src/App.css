@@ -143,5 +143,46 @@ body {
   .buttons .google{
     @apply md:px-4 
   }
+}
 
+
+/* Add this to your main CSS file (e.g., index.css) */
+
+.markdown-content {
+  /* This ensures that long words or links will break and wrap */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Target pre-formatted text and code blocks */
+.markdown-content pre {
+  white-space: pre-wrap; /* Allows the code block to wrap */
+  word-break: break-all; /* Breaks long words if necessary */
+  background-color: #1a1a1a; /* Optional: adds a nice background to code blocks */
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  overflow-x: auto; /* Adds a horizontal scrollbar if content is still too wide */
+}
+
+.markdown-content code {
+  /* Style for inline code */
+  background-color: rgba(135, 141, 148, 0.15);
+  color: #ffb86c; /* Example color */
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  word-break: break-all;
+}
+
+/* Target images to make sure they are responsive */
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Target tables to make them scrollable on small screens */
+.markdown-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
 }
