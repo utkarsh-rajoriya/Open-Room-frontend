@@ -7,13 +7,13 @@ import CreateRoom from "./CreateRoom";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import JoinRoom from "./JoinRoom";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Hero = ({user}) => {
+const Hero = ({ user }) => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-  gsap.registerPlugin(ScrollToPlugin)
+  gsap.registerPlugin(ScrollToPlugin);
   const navigate = useNavigate();
-  const buttonsRef = useRef(null)
+  const buttonsRef = useRef(null);
   const RoomCardArray = [
     {
       roomImg:
@@ -57,63 +57,91 @@ const Hero = ({user}) => {
   const tl = gsap.timeline();
 
   const showLogins = () => {
-  tl.clear(); // clear previous timeline animations
+  tl.clear();
 
-  // Scroll smoothly to the login buttons
+  // Smooth scroll to the login section
   tl.to(window, {
     duration: 1,
-    scrollTo: { y: buttonsRef.current, offsetY: 200 },
-    ease: "power2.inOut",
+    scrollTo: { y: buttonsRef.current, offsetY: 150 },
+    ease: "power3.inOut",
   });
 
-  // GitHub button animation
-  tl.to(".github", {
-    scale: 1.4,
-    rotation: 5,
-    duration: 0.4,
-    yoyo: true,
-    repeat: 1,
-    ease: "bounce.out",
-    boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
-  }, "-=0.2");
-  
-  tl.to(".google", {
-    scale: 1.3,
-    rotation: -5,
-    duration: 0.4,
-    yoyo: true,
-    repeat: 1,
-    ease: "elastic.out(1, 0.5)",
-    boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
-  }, "-=0.35");
-  
-  tl.to([".github", ".google"], {
-    x: 5,
-    duration: 0.05,
-    yoyo: true,
-    repeat: 5,
-    ease: "power1.inOut",
-  });
+  // Buttons fade in from below with stagger and blur
+  tl.fromTo(
+    [".github", ".google"],
+    { opacity: 0, y: 60, filter: "blur(10px)", scale: 0.7 },
+    {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      scale: 1,
+      duration: 0.8,
+      ease: "expo.out",
+      stagger: 0.25,
+    }
+  );
+
+  // Add glowing ring ripple (like energy pulse)
+  tl.to(
+    [".github", ".google"],
+    {
+      boxShadow: "0 0 30px rgba(0, 180, 255, 0.8), 0 0 60px rgba(0, 180, 255, 0.3)",
+      duration: 0.4,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.inOut",
+      stagger: 0.2,
+    },
+    "-=0.4"
+  );
+
+  // Float effect — gently rise and fall
+  tl.to(
+    [".github", ".google"],
+    {
+      y: "+=5",
+      duration: 1.5,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+      stagger: 0.3,
+    },
+    "-=0.2"
+  );
+
+  // Subtle rotation pulse for depth
+  tl.to(
+    [".github", ".google"],
+    {
+      rotationZ: 2,
+      duration: 0.6,
+      yoyo: true,
+      repeat: 2,
+      ease: "power1.inOut",
+      stagger: 0.15,
+    },
+    "-=1"
+  );
 };
 
 
-  const handleCreateRoom = () =>{
-    if(!localStorage.getItem('email')){
-      showLogins()
+  const handleCreateRoom = () => {
+    if (!localStorage.getItem("email")) {
+      showLogins();
       return;
     }
 
-  setShowCreateRoom(true);
-  }
+    setShowCreateRoom(true);
+  };
 
-  const handleJoinRoom = () =>{
-    if(!localStorage.getItem('email')){
-      showLogins()
+  const handleJoinRoom = () => {
+    if (!localStorage.getItem("email")) {
+      showLogins();
       return;
     }
-    navigate("/viewRooms")
-  }
-  
+    navigate("/viewRooms");
+  };
+
   const closeModal = () => {
     setShowCreateRoom(false);
     setShowJoinRoom(false);
@@ -154,79 +182,81 @@ const Hero = ({user}) => {
 
         {/* Intro Paragraph */}
         <div className="mt-[2rem] p-5 flex-row">
-          <p className="text-white text-center text-md w-[70rem] max-w-full">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur
-            ad sequi dolores eos, minima, delectus temporibus nesciunt officia
-            ut laborum deleniti voluptatum sunt eum voluptates ex nemo, dolor
-            non quia?
+          <p className="text-white text-center text-md w-[70rem] max-w-full leading-relaxed">
+            <span className="font-semibold text-[#58a6ff]">OpenRoom</span> lets
+            you build the space you need — for work, study, or play. Just one
+            click to create, connect, and collaborate. No limits, no
+            distractions — just your perfect room.
           </p>
         </div>
 
-        {!user && <div className="buttons" ref={buttonsRef}>
-          <div className="w-55">
-            <button
-              onClick={(e) =>
-                (window.location.href = `${baseUrl}/oauth2/authorization/github`)
-              }
-              type="button"
-              className="github py-2 max-w-md flex justify-center items-center bg-gray-700 hover:bg-[#433D8B] focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="mr-2"
-                viewBox="0 0 1792 1792"
+        {!user && (
+          <div className="buttons" ref={buttonsRef}>
+            <div className="w-55">
+              <button
+                onClick={(e) =>
+                  (window.location.href = `${baseUrl}/oauth2/authorization/github`)
+                }
+                type="button"
+                className="github py-2 max-w-md flex justify-center items-center bg-gray-700 hover:bg-[#433D8B] focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
               >
-                <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"></path>
-              </svg>
-              Sign in with GitHub
-            </button>
-          </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="mr-2"
+                  viewBox="0 0 1792 1792"
+                >
+                  <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"></path>
+                </svg>
+                Sign in with GitHub
+              </button>
+            </div>
 
-          <div className="w-50">
-            <button
-              className="gsi-material-button google"
-              onClick={(e) =>
-                (window.location.href = `${baseUrl}/oauth2/authorization/google`)
-              }
-            >
-              <div className="gsi-material-button-state"></div>
-              <div className="gsi-material-button-content-wrapper">
-                <div className="gsi-material-button-icon">
-                  <svg
-                    version="1.1"
-                    viewBox="0 0 48 48"
-                    style={{ display: "block" }}
-                  >
-                    <path
-                      fill="#EA4335"
-                      d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-                    ></path>
-                    <path
-                      fill="#4285F4"
-                      d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-                    ></path>
-                    <path
-                      fill="#FBBC05"
-                      d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-                    ></path>
-                    <path
-                      fill="#34A853"
-                      d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-                    ></path>
-                    <path fill="none" d="M0 0h48v48H0z"></path>
-                  </svg>
+            <div className="w-50">
+              <button
+                className="gsi-material-button google"
+                onClick={(e) =>
+                  (window.location.href = `${baseUrl}/oauth2/authorization/google`)
+                }
+              >
+                <div className="gsi-material-button-state"></div>
+                <div className="gsi-material-button-content-wrapper">
+                  <div className="gsi-material-button-icon">
+                    <svg
+                      version="1.1"
+                      viewBox="0 0 48 48"
+                      style={{ display: "block" }}
+                    >
+                      <path
+                        fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                      ></path>
+                      <path
+                        fill="#4285F4"
+                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                      ></path>
+                      <path
+                        fill="#FBBC05"
+                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                      ></path>
+                      <path
+                        fill="#34A853"
+                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                      ></path>
+                      <path fill="none" d="M0 0h48v48H0z"></path>
+                    </svg>
+                  </div>
+                  <span className="gsi-material-button-contents">
+                    Sign in with Google
+                  </span>
+                  <span style={{ display: "none" }}>Sign in with Google</span>
                 </div>
-                <span className="gsi-material-button-contents">
-                  Sign in with Google
-                </span>
-                <span style={{ display: "none" }}>Sign in with Google</span>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
-        </div>}
+        )}
 
         {/* Room Cards */}
         <div className="flex-row mt-[3rem] md:mt-[4rem]">
