@@ -10,7 +10,7 @@ const CreateRoom = ({ onClose }) => {
   const [enableAI, setEnableAI] = useState(false);
   const navigate = useNavigate();
 
-  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8081";
+  const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:8081";
 
   const handleCreateRoom = async () => {
   try {
