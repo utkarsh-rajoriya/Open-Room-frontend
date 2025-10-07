@@ -8,6 +8,7 @@ import logo from "/Open-Room-logo.png";
 import { useEffect, useState } from "react";
 import ViewRooms from "./components/ViewRooms";
 import ViewMembersInfo from "./components/ViewMembersInfo";
+import About from "./components/About";
 
 const App = () => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -99,6 +100,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Hero user={user} />} />
+        <Route path="/about" element={<About />} />
         <Route path="/room/:id" element={<Room />} />
         <Route path="/viewRooms" element={<ViewRooms />} />
         <Route path="/viewMembersInfo/:roomId" element={<ViewMembersInfo />} />
