@@ -60,9 +60,9 @@ const About = () => {
         {/* Left Side: Image and Name */}
         <div className="flex flex-col items-center text-center flex-shrink-0">
           <img
-            src="https://res.cloudinary.com/dtf1quyas/image/upload/v1759823989/utkarsh-rounded-png_vrjjb3.png"
+            src="https://res.cloudinary.com/dtf1quyas/image/upload/v1759899547/utkarsh-rounded-png_yrygm3.png"
             alt="Utkarsh Rajoriya"
-            className="profile-image w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-cyan-400/60 shadow-lg mb-5 filter brightness-110"
+            className="profile-image w-48 h-48 md:w-64 md:h-64 object-cover shadow-lg mb-5 filter brightness-110"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src =
